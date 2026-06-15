@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jm1015 - 背單字軟體</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">📚 jm1015</div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="study">背單字</a></li>
+                <li><a href="#" class="nav-link" data-page="manage">管理單字</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="main-container">
+        
+        <!-- 背單字頁面 -->
+        <section id="study-page" class="page active">
+            <div class="study-container">
+                <!-- 進度條 -->
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="current-index">1</span> / <span id="total-words">0</span>
+                </div>
+
+                <!-- 卡片 -->
+                <div class="card-container">
+                    <div class="card" id="mainCard">
+                        <div class="card-inner">
+                            <!-- 正面 -->
+                            <div class="card-front">
+                                <div class="card-content">
+                                    <p class="label">English Word</p>
+                                    <p class="word" id="frontWord">Click to start</p>
+                                </div>
+                            </div>
+                            <!-- 背面 -->
+                            <div class="card-back">
+                                <div class="card-content">
+                                    <div class="back-item">
+                                        <span class="label">Translation:</span>
+                                        <span class="value" id="backTranslation">-</span>
+                                    </div>
+                                    <div class="back-item">
+                                        <span class="label">Part of Speech:</span>
+                                        <span class="value" id="backPOS">-</span>
+                                    </div>
+                                    <div class="back-item">
+                                        <span class="label">Example:</span>
+                                        <span class="value" id="backExample">-</span>
+                                    </div>
+                                    <div class="back-item">
+                                        <span class="label">Root Analysis:</span>
+                                        <span class="value" id="backRoot">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 控制按鈕 -->
+                <div class="controls">
+                    <button id="prevBtn" class="btn btn-prev">← Previous</button>
+                    <button id="flipBtn" class="btn btn-flip">🔄 Flip Card</button>
+                    <button id="nextBtn" class="btn btn-next">Next →</button>
+                </div>
+
+                <!-- 額外選項 -->
+                <div class="options">
+                    <button id="shuffleBtn" class="btn btn-option">🔀 Shuffle</button>
+                    <button id="resetBtn" class="btn btn-option">🔁 Reset</button>
+                </div>
+
+                <!-- 空狀態 -->
+                <div id="emptyState" class="empty-state">
+                    <p>📭 No words available</p>
+                    <p>Go to "Manage Words" to add some!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 管理頁面 -->
+        <section id="manage-page" class="page">
+            <div class="manage-container">
+                <h2>Manage Words</h2>
+
+                <!-- 新增表單 -->
+                <div class="form-section">
+                    <h3>Add New Word</h3>
+                    <form id="addWordForm" class="word-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="englishWord">English Word *</label>
+                                <div class="input-group">
+                                    <input type="text" id="englishWord" placeholder="Enter English word" required>
+                                    <button type="button" id="autoFillBtn" class="btn btn-auto-fill">
+                                        ✨ Auto Fill
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="translation">Chinese Translation *</label>
+                                <input type="text" id="translation" placeholder="Enter translation" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="partOfSpeech">Part of Speech *</label>
+                                <select id="partOfSpeech" required>
+                                    <option value="">-- Select Part of Speech --</option>
+                                    <option value="noun">Noun (名詞)</option>
+                                    <option value="verb">Verb (動詞)</option>
+                                    <option value="adjective">Adjective (形容詞)</option>
+                                    <option value="adverb">Adverb (副詞)</option>
+                                    <option value="preposition">Preposition (介詞)</option>
+                                    <option value="conjunction">Conjunction (連接詞)</option>
+                                    <option value="pronoun">Pronoun (代名詞)</option>
+                                    <option value="other">Other (其他)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exampleSentence">Example Sentence *</label>
+                                <textarea id="exampleSentence" placeholder="Enter example sentence" rows="2" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="rootAnalysis">Root Analysis</label>
+                                <textarea id="rootAnalysis" placeholder="Enter root analysis (optional)" rows="2"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Add Word</button>
+                            <button type="reset" class="btn btn-secondary">Clear</button>
+                        </div>
+                    </form>
+
+                    <!-- 加載狀態 -->
+                    <div id="loadingIndicator" class="loading-indicator">
+                        <span class="spinner"></span>
+                        <span>Fetching data...</span>
+                    </div>
+                </div>
+
+                <!-- 單字列表 -->
+                <div class="list-section">
+                    <h3>Word List <span id="wordCount">(0)</span></h3>
+                    <div id="wordList" class="word-list">
+                        <p class="empty-message">No words added yet</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 提示消息 -->
+    <div id="notification" class="notification"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
